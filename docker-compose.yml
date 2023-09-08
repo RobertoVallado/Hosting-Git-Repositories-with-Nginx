@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  html:
+    build: .
+    ports:
+      - 4200:80
