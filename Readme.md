@@ -1,3 +1,3 @@
 *Example of using an html server*
-- Tobuild
-    - Just run docker composet up --build
+- To build
+    - Just run docker compose up --build
