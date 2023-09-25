@@ -5,7 +5,7 @@ services:
     ports:
       - "4200-4240:80"
     volumes:
-      - ./repos:/usr/share/nginx/html/repos
+      - /path/to/your/local/repos:/usr/share/nginx/html/repos
     networks:
       - nginx-net
   git-repos:
