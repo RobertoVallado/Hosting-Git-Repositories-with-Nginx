@@ -1,0 +1,13 @@
+version: '3'
+services:
+  images:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ../../FALL-23/repos/images:/usr/share/nginx/html
+  
+
+  #Auto generated builds will populate this file
