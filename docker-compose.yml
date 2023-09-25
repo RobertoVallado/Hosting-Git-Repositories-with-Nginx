@@ -1,6 +1,20 @@
 version: "3.9"
 services:
-  html:
-    build: .
+  nginx-git-repos:
+    image: live-classroom-nginx
     ports:
-      - 4200:80
+      - "4200-4240:80"
+    volumes:
+      - ./repos:/usr/share/nginx/html/repos
+    networks:
+      - nginx-net
+  git-repos:
+    image: alpine/git
+    volumes:
+      - ./repos:/repos
+    command: /bin/sh -c "while true; do sleep 60; done"
+    networks:
+      - nginx-net
+
+networks:
+  nginx-net:
