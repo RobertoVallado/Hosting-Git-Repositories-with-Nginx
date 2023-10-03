@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Directory containing your repositories
-REPO_DIR="repos/"
+REPO_DIR="../FALL-23/repos"
+PORTS_FILE_DESTINATION="../Cygrader2.0/ports.txt"
+# Remove existing generated ports file if it exists
+rm -f "$PORTS_FILE_DESTINATION"
 
 # Output file for the dynamic docker-compose.yml
 OUTPUT_FILE="docker-compose.generated.yml"
@@ -24,7 +27,6 @@ for dir in "$REPO_DIR"/*; do
     TO_LOWERCASE="${SERVICE_NAME,,}"
     # Remove "initial-setup-" prefix
     RESULT_NAME="${TO_LOWERCASE#initial-setup-}"
-    RESULT_NAME="${RESULT_NAME%.git}"
 
     echo "  $RESULT_NAME:" >> "$OUTPUT_FILE"
     echo "    build:" >> "$OUTPUT_FILE"
@@ -34,6 +36,9 @@ for dir in "$REPO_DIR"/*; do
     echo "      - \"$PORT:80\"" >> "$OUTPUT_FILE"
     echo "    volumes:" >> "$OUTPUT_FILE"
     echo "      - $dir:/usr/share/nginx/html" >> "$OUTPUT_FILE"
+
+    #GENERATES A NAME:PORT FILE TO ITERATE TROUGH
+    echo "  $RESULT_NAME: $PORT" >> "$PORTS_FILE_DESTINATION"
 
     PORT=$((PORT + 1))
 
