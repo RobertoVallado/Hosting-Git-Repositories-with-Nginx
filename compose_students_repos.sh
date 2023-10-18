@@ -2,7 +2,7 @@
 
 # Directory containing your repositories
 REPO_DIR="../FALL-23/repos"
-PORTS_FILE_DESTINATION="../Cygrader2.0/ports.txt"
+
 # Remove existing generated ports file if it exists
 rm -f "$PORTS_FILE_DESTINATION"
 
@@ -16,6 +16,8 @@ rm -f "$OUTPUT_FILE"
 echo "version: '3'" >> "$OUTPUT_FILE"
 echo "services:" >> "$OUTPUT_FILE"
 PORT="8080"
+FILE_STARTER_SUFFIX="1"
+COUNTER=1
 
 # Loop through each subdirectory in REPO_DIR
 for dir in "$REPO_DIR"/*; do
@@ -37,11 +39,18 @@ for dir in "$REPO_DIR"/*; do
     echo "    volumes:" >> "$OUTPUT_FILE"
     echo "      - $dir:/usr/share/nginx/html" >> "$OUTPUT_FILE"
 
+    PORTS_FILE_DESTINATION="../Cygrader2.0/ports$FILE_STARTER_SUFFIX.txt"
     #GENERATES A NAME:PORT FILE TO ITERATE TROUGH
     echo "  $RESULT_NAME: $PORT" >> "$PORTS_FILE_DESTINATION"
 
     PORT=$((PORT + 1))
+    COUNTER=$((COUNTER + 1))
 
+    #files are only 10 people long for beter usage with CYPRESS
+    if [ "$COUNTER" -gt 10 ]; then 
+        FILE_STARTER_SUFFIX=$((FILE_STARTER_SUFFIX + 1))
+        COUNTER=1
+    fi
   fi
 done
 
